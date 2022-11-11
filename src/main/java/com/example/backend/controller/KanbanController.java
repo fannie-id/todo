@@ -1,18 +1,18 @@
 package com.example.backend.controller;
 
 
-import com.example.backend.model.Status;
+
 import com.example.backend.model.Todo;
 import com.example.backend.service.Kanban;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
+
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class KanbanController {
-private Kanban kanban;
+private final Kanban kanban;
 
     public KanbanController(Kanban kanban) {
         this.kanban = kanban;
@@ -29,17 +29,17 @@ private Kanban kanban;
     }
 
     @PostMapping(path="/todo")
-    public void addTodo( @RequestBody Todo task ){
-        kanban.addTodo(task);
+    public Todo addTodo( @RequestBody Todo task ){
+         return kanban.addTodo(task);
     }
 
     @PutMapping("/todo/{id}")
-    public void changeTodo(@RequestBody Todo task){
-        kanban.changeTodo(task);
+    public Todo changeTodo(@RequestBody Todo task){
+        return kanban.changeTodo(task);
     }
 
     @DeleteMapping("/todo/{id}")
     public void deleteTodo(@PathVariable String id){
-        kanban.deleteTodo(id);
+         kanban.deleteTodo(id);
     }
 }

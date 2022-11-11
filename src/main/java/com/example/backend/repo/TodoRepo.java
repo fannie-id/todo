@@ -1,6 +1,5 @@
 package com.example.backend.repo;
 
-import com.example.backend.model.Status;
 import com.example.backend.model.Todo;
 import org.springframework.stereotype.Repository;
 
@@ -29,38 +28,34 @@ public class TodoRepo {
     }
 
 
-    public void addTodo(Todo task) {
+    public Todo addTodo(Todo task) {
 
         String uniqueID = UUID.randomUUID().toString();
-
-
         Todo newTask = new Todo(task.description(), task.status(), uniqueID);
 
         todos.add(newTask);
+        return newTask;
 
 
     }
 
 
-    public void changeTodo(Todo task) {
+    public Todo changeTodo(Todo task) {
         for (Todo todo : todos) {
             if (todo.id().equals(task.id())) {
                 todos.set(todos.indexOf(todo),task);
+                return task;
             }
         }
+        return null;
     }
 
-    public void deleteTodo(String id) {
+    public Todo deleteTodo(String id) {
 
-        Iterator<Todo> i = todos.iterator();
-        while (i.hasNext()) {
-
-            Todo task = i.next(); // must be called before you can call i.remove()
-            // Do something
-            if (task.id().equals(id)) {
-                i.remove();
-            }
-        }
+        // must be called before you can call i.remove()
+        // Do something
+        todos.removeIf(task -> task.id().equals(id));
+        return null;
 
     }
 }
